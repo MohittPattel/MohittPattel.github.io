@@ -1,72 +1,25 @@
-$(document).ready(function(){
-    $(window).scroll(function(){
-        // sticky navbar on scroll script
-        if(this.scrollY > 20){
-            $('.navbar').addClass("sticky");
-        }else{
-            $('.navbar').removeClass("sticky");
-        }
-        
-        // scroll-up button show/hide script
-        if(this.scrollY > 500){
-            $('.scroll-up-btn').addClass("show");
-        }else{
-            $('.scroll-up-btn').removeClass("show");
-        }
-    });
+const body=document.body;
+const themeToggle=document.getElementById("themeToggle");
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
 
-    // slide-up script
-    $('.scroll-up-btn').click(function(){
-        $('html').animate({scrollTop: 0});
-        // removing smooth scroll on slide-up button click
-        $('html').css("scrollBehavior", "auto");
-    });
+const savedTheme=localStorage.getItem("portfolio-theme");
+if(savedTheme==="light") body.classList.add("light");
+function updateThemeIcon(){themeToggle.textContent=body.classList.contains("light")?"☀":"☾"}
+updateThemeIcon();
 
-    $('.navbar .menu li a').click(function(){
-        // applying again smooth scroll on menu items click
-        $('html').css("scrollBehavior", "smooth");
-    });
-
-    // toggle menu/navbar script
-    $('.menu-btn').click(function(){
-        $('.navbar .menu').toggleClass("active");
-        $('.menu-btn i').toggleClass("active");
-    });
-
-    // typing text animation script
-    var typed = new Typed(".typing", {
-        strings: ["Developer", "Engineer", "Mentor", "Freelancer", "Learner"],
-        typeSpeed: 100,
-        backSpeed: 60,
-        loop: true
-    });
-
-    var typed = new Typed(".typing-2", {
-        strings: ["Developer", "Engineer", "Mentor", "Freelancer", "Learner"],
-        typeSpeed: 100,
-        backSpeed: 60,
-        loop: true
-    });
-
-    // owl carousel script
-    $('.carousel').owlCarousel({
-        margin: 20,
-        loop: true,
-        autoplayTimeOut: 2000,
-        autoplayHoverPause: true,
-        responsive: {
-            0:{
-                items: 1,
-                nav: false
-            },
-            600:{
-                items: 2,
-                nav: false
-            },
-            1000:{
-                items: 3,
-                nav: false
-            }
-        }
-    });
+themeToggle.addEventListener("click",()=>{
+  body.classList.toggle("light");
+  localStorage.setItem("portfolio-theme",body.classList.contains("light")?"light":"dark");
+  updateThemeIcon();
 });
+
+menuToggle.addEventListener("click",()=>navLinks.classList.toggle("open"));
+navLinks.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>navLinks.classList.remove("open")));
+
+document.getElementById("year").textContent=new Date().getFullYear();
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}})
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
