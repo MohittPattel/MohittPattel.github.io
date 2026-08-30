@@ -256,6 +256,27 @@ nav a:hover {
   max-width: 760px;
   margin: 0;
 }
+.business-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+.business-profile-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px 22px;
+}
+.business-profile-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+}
+.business-profile-card p {
+  margin: 0;
+  color: var(--muted);
+}
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -585,6 +606,7 @@ footer {
   .stats div:nth-child(-n + 2) {
     border-bottom: 1px solid var(--line);
   }
+  .business-profile-grid,
   .skill-grid,
   .project-grid {
     grid-template-columns: 1fr;
